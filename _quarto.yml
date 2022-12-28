@@ -1,0 +1,79 @@
+project:                
+  type: website          
+  output-dir: docs        #- NO TOCAR: carpeta donde se redirige el output
+  
+website:
+  title: "Trabajo individual BigData"     #- hay q cambiarlo
+  favicon: my_favicon.png           #- pon tu favicon
+  # site-url: https://....               #- hay que rellenarlos
+  # repo-url: https://....
+  # repo-actions: [edit, issue]
+  search:   
+    location: navbar
+    type: overlay   
+    copy-button: true
+  navbar:
+    logo: "my_favicon.png"           #---
+    background: "#e1c699"    #- color de la navbar
+    foreground: "#000000"    #- color navigation elements, text and links that appear in the navbar.
+    left: 
+      - icon: house-door
+        href: index.html
+    right:
+      - text: "Trabajo individual BigData"   #---
+        href: my_trabajo_BigData.qmd   
+      - icon: github
+        href: https://github.com/roodrigueezzz    #---
+      - icon: twitter
+        href: https://twitter.com/rubenrogi22  #---
+      - icon: envelope
+        url: "mailto:rurogi@alumni.uv.es"            #---
+  page-footer:
+    border: true
+    background: "#e1c699"         #--
+    left: "© 2022 Pedro Navaja"   #--
+    center: "Hecho con [Quarto](https://quarto.org)"
+    right:
+      - icon: github
+        href: https://github.com/roodrigueezzz    #----
+      - icon: twitter
+        href: https://twitter.com/rubenrogi22  #-----
+      - icon: envelope
+        url: "mailto:rurogi@alumni.uv.es"            #-----
+    
+format:
+  html:
+    theme: flatly           #- https://quarto.org/docs/output-formats/html-themes.html
+    highlight-style: a11y   #-
+    css: my_styles.css      #- si queréis añadir cosas
+    page-layout: full
+    toc: true
+    code-copy: true
+    code-overflow: wrap    
+    code-fold: true
+    code-line-numbers: true
+
+# Enable CC licence appendix
+#license: "CC BY"
+
+lang: es  
+
+# Default execute options
+execute:
+  #freeze: true  #- des-comentar cuando estéis tuneando el blog
+  echo: true
+  message: false
+  warning: false
+  eval: true
+
+#- Default knitr options
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: "#>" 
+    fig.asp:  7/9
+    out.width: "95%"
+    fig.align: "center"
+    fig.show: "hold"
+    R.options:
+      options(scipen = 999) #- para quitar la notación científica  

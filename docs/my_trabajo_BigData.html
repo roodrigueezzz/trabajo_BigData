@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Rubén Rodríguez Giménez (rurogi@uv.es)">
+<meta name="description" content="Viendo como esta la situación del mercado en España y las CC.AA">
+<title>Trabajo individual BigData - El mercado de coches de segunda mano</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./my_favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": true,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar"
+  }
+}</script><style>html{ scroll-behavior: smooth; }</style>
+<style>
+    .quarto-title-block .quarto-title-banner {
+      color: white;
+background: #A9957B;
+    }
+    </style>
+<link rel="stylesheet" href="my_styles.css">
+</head>
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./my_favicon.png" alt="" class="navbar-logo"></a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Trabajo individual BigData</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item compact">
+    <a class="nav-link" href="./index.html"><i class="bi bi-house-door" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item">
+    <a class="nav-link active" href="./my_trabajo_BigData.html" aria-current="page">
+ <span class="menu-text">Trabajo individual BigData</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/roodrigueezzz"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/rubenrogi22"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:rurogi@alumni.uv.es"><i class="bi bi-envelope" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+<div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-right">
+      <div class="quarto-title-block"><div><h1 class="title">El mercado de coches de segunda mano</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Código</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Mostrar todo el código</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Ocultar todo el código</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">Ver el código fuente</a></li></ul></div></div>
+                  <div>
+        <div class="description">
+          <p>Viendo como esta la situación del mercado en España y las CC.AA</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">trabajo BigData</div>
+                <div class="quarto-category">Coches</div>
+                <div class="quarto-category">Mercado de segunda mano</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Autor/a</div>
+      <div class="quarto-title-meta-contents">
+               <p>Rubén Rodríguez Giménez (rurogi@uv.es) </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Fecha de publicación</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">26 de diciembre de 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+<li><a href="#introducci%C3%B3n" id="toc-introducción" class="nav-link active" data-scroll-target="#introducci%C3%B3n">Introducción</a></li>
+  <li><a href="#paquetes-y-datos-usados" id="toc-paquetes-y-datos-usados" class="nav-link" data-scroll-target="#paquetes-y-datos-usados">Paquetes y datos usados</a></li>
+  <li><a href="#marcas-en-venta" id="toc-marcas-en-venta" class="nav-link" data-scroll-target="#marcas-en-venta">Marcas en venta</a></li>
+  <li><a href="#cantidad-de-coches-anunciados" id="toc-cantidad-de-coches-anunciados" class="nav-link" data-scroll-target="#cantidad-de-coches-anunciados">Cantidad de coches anunciados</a></li>
+  <li><a href="#precios-de-los-coches" id="toc-precios-de-los-coches" class="nav-link" data-scroll-target="#precios-de-los-coches">Precios de los coches</a></li>
+  <li><a href="#comparaci%C3%B3n-de-los-kilometros-con-los-a%C3%B1os-del-coche" id="toc-comparación-de-los-kilometros-con-los-años-del-coche" class="nav-link" data-scroll-target="#comparaci%C3%B3n-de-los-kilometros-con-los-a%C3%B1os-del-coche">Comparación de los kilometros con los años del coche</a></li>
+  <li><a href="#conclusiones" id="toc-conclusiones" class="nav-link" data-scroll-target="#conclusiones">Conclusiones</a></li>
+  <li><a href="#informaci%C3%B3n-sobre-la-sesi%C3%B3n" id="toc-información-sobre-la-sesión" class="nav-link" data-scroll-target="#informaci%C3%B3n-sobre-la-sesi%C3%B3n">Información sobre la sesión</a></li>
+  </ul></nav>
+</nav><!-- margin-sidebar --><div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block column-page-right" id="quarto-document-content"><section id="introducción" class="level2"><h2 class="anchored" data-anchor-id="introducción">Introducción</h2>
+<p>Hace un año, me compré mi primer coche de segunda mano.</p>
+<p>Me costó mucho encontrar un coche decente dentro del mercado, todos tenian algún problema el cual no era informado o era saboteado como los kilometros para así que sea mas atractivo.</p>
+<p>Después de cuatro meses buscando encontré lo que busacaba y a día de hoy estoy contento con mi compra.</p>
+<p>Esta situacion me ha hecho reflexionar y me ha ayudado a decidirme por coger este DataSet y analizar el mercado, dentro de lo posible, de como está la situación en España y en las diferentes CC.AA. con una muestra de 50.000 coches de la página de ventas de segunda mano, Wallapop.</p>
+</section><section id="paquetes-y-datos-usados" class="level2"><h2 class="anchored" data-anchor-id="paquetes-y-datos-usados">Paquetes y datos usados</h2>
+<p>Para descargar y manipular los datos he optado por la siguiente lista de paquetes, la mayoría usados en las clases de este curso:</p>
+<div class="cell" data-layout-align="center">
+<details><summary>Código</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse) <span class="co">#install.packages("tidyverse")</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(sf) <span class="co">#install.packages("sf")</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(DT) <span class="co">#install.packages("DT")</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(ggThemeAssist) <span class="co">#install.packages("ggThemeAssist")</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">library</span>(patchwork) <span class="co">#install.packages("patchwork")</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">library</span>(plotly) <span class="co">#-install.packages("plotly")</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">library</span>(knitr) <span class="co">#install.packages("plotly")</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="fu">library</span>(tibble) <span class="co">#install.packages("tibble")</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="fu">library</span>(ggthemes) <span class="co">#install.packages("ggthemes)</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="fu">library</span>(gifski) <span class="co">#install.packages("gifski")</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="fu">library</span>(gt) <span class="co">#install.packages("gt")</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="fu">library</span>(kableExtra) <span class="co">#install.packages("kableExtra")</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="fu">library</span>(maps) <span class="co">#install.packages("maps")</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Para el tema de los datos, he usado unos datos de la página <a href="https://www.kaggle.com/">KAGGLE</a> concretamente, este <a href="https://www.kaggle.com/datasets/datamarket/venta-de-coches">DATASET</a></p>
+<p>Dichos datos contienen informacion de 50.000 coches de la página de <a href="https://es.wallapop.com/">WALLAPOP</a>. Entre ellos, el tipo de coche,la marca, el precio, el modelo y los kilometros, entre otros.</p>
+</section><section id="marcas-en-venta" class="level2"><h2 class="anchored" data-anchor-id="marcas-en-venta">Marcas en venta</h2>
+<p>Existen muchas marcas de coches en venta, mas de las que me imagianaba. El siguiente grafico nos muestra la cantidad de coches que hay en venta de cada marca en España.</p>
+<div class="cell" data-layout-align="center">
+<details><summary>Código</summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">999</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a>coches <span class="ot">&lt;-</span> rio<span class="sc">::</span><span class="fu">import</span>(<span class="st">"./datos/coches.csv"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5"></a>coches <span class="ot">&lt;-</span> coches <span class="sc">%&gt;%</span> </span>
+<span id="cb2-6"><a href="#cb2-6"></a>  <span class="fu">mutate</span>(<span class="at">Marca =</span> make) <span class="sc">%&gt;%</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a>  <span class="fu">mutate</span>(<span class="at">Modelo =</span> model) <span class="sc">%&gt;%</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a>  <span class="fu">mutate</span>(<span class="at">Precio =</span> price) <span class="sc">%&gt;%</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a>  <span class="fu">mutate</span>(<span class="at">Combustible =</span> fuel) <span class="sc">%&gt;%</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>  <span class="fu">mutate</span>(Año <span class="ot">=</span> year) <span class="sc">%&gt;%</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a>  <span class="fu">mutate</span>(<span class="at">Kilometros =</span> kms) <span class="sc">%&gt;%</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a>  <span class="fu">mutate</span>(<span class="at">Profesional =</span> is_professional) <span class="sc">%&gt;%</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a>  <span class="fu">mutate</span>(<span class="at">Provincia =</span> province) <span class="sc">%&gt;%</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a>  <span class="fu">select</span>(<span class="st">"Marca"</span>, <span class="st">"Modelo"</span>, <span class="st">"Precio"</span>, <span class="st">"Combustible"</span>, <span class="st">"Año"</span>, <span class="st">"Kilometros"</span>, <span class="st">"Profesional"</span>, <span class="st">"Provincia"</span>) </span>
+<span id="cb2-15"><a href="#cb2-15"></a></span>
+<span id="cb2-16"><a href="#cb2-16"></a>coches<span class="sc">$</span>Profesional <span class="ot">&lt;-</span> <span class="fu">as.character</span>(coches<span class="sc">$</span>Profesional)</span>
+<span id="cb2-17"><a href="#cb2-17"></a></span>
+<span id="cb2-18"><a href="#cb2-18"></a></span>
+<span id="cb2-19"><a href="#cb2-19"></a>Marcas <span class="ot">&lt;-</span> coches <span class="sc">%&gt;%</span> </span>
+<span id="cb2-20"><a href="#cb2-20"></a>  <span class="fu">count</span>(Marca) <span class="sc">%&gt;%</span></span>
+<span id="cb2-21"><a href="#cb2-21"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span>
+<span id="cb2-22"><a href="#cb2-22"></a>  </span>
+<span id="cb2-23"><a href="#cb2-23"></a>masMarcas <span class="ot">&lt;-</span> Marcas <span class="sc">%&gt;%</span></span>
+<span id="cb2-24"><a href="#cb2-24"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">1500</span>)</span>
+<span id="cb2-25"><a href="#cb2-25"></a></span>
+<span id="cb2-26"><a href="#cb2-26"></a>menMarcas <span class="ot">&lt;-</span> Marcas <span class="sc">%&gt;%</span></span>
+<span id="cb2-27"><a href="#cb2-27"></a>  <span class="fu">filter</span>(n <span class="sc">&lt;</span> <span class="dv">1500</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-28"><a href="#cb2-28"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">5</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Las marcas mas anunciadas son las siguientes:</p>
+<div class="cell" data-layout-align="center">
+<details><summary>Código</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>Grafico_masMarcas <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(masMarcas) <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Marca,n), <span class="at">y =</span> n, <span class="at">fill =</span> Marca) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>  <span class="fu">scale_fill_hue</span>(<span class="at">direction =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_base</span>() <span class="sc">+</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Marca"</span>, <span class="at">y =</span> <span class="st">"Número de coches en venta"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8"></a></span>
+<span id="cb3-9"><a href="#cb3-9"></a>Grafico_masMarcas</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="my_trabajo_BigData_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" style="width:95.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Es curiosos como dentro de las 5 primeras marcas mas vendidas se encuentran coches como Mercedes, BMW o Audi, coches de gama alta y que no son muy accesibles a la clase de gente que busca cohces de segunda mano.</p>
+<p><br></p>
+<p>Las marcas menos anunciadas son estas:</p>
+<div class="cell" data-layout-align="center">
+<details><summary>Código</summary><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>Grafico_menMarcas <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(menMarcas) <span class="sc">+</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Marca,n), <span class="at">y =</span> n, <span class="at">fill =</span> Marca) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="fu">scale_fill_hue</span>(<span class="at">direction =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_base</span>() <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Marca"</span>, <span class="at">y =</span> <span class="st">"Número de coches en venta"</span>)</span>
+<span id="cb4-9"><a href="#cb4-9"></a></span>
+<span id="cb4-10"><a href="#cb4-10"></a>Grafico_menMarcas</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="my_trabajo_BigData_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" style="width:95.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Como se oberva hay marcas que no se venden practicamente nada, al tratarse de marcas exclusivas de otros paises y han tenido que ser importados.</p>
+</section><section id="cantidad-de-coches-anunciados" class="level2"><h2 class="anchored" data-anchor-id="cantidad-de-coches-anunciados">Cantidad de coches anunciados</h2>
+<p>A continuación, voy a representar en un mapa la cantidad de coches anunciados en las diferentes provincias.</p>
+<div class="cell" data-layout-align="center">
+<details><summary>Código</summary><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>Provincias <span class="ot">&lt;-</span> coches <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">count</span>(Provincia) <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span>
+<span id="cb5-4"><a href="#cb5-4"></a>  </span>
+<span id="cb5-5"><a href="#cb5-5"></a>Provincias <span class="ot">&lt;-</span> Provincias[<span class="dv">1</span><span class="sc">:</span><span class="dv">52</span>,]</span>
+<span id="cb5-6"><a href="#cb5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7"></a>españamun <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"./shapefiles"</span>, <span class="st">"mun"</span>)</span>
+<span id="cb5-8"><a href="#cb5-8"></a></span>
+<span id="cb5-9"><a href="#cb5-9"></a>españamun <span class="ot">&lt;-</span> españamun <span class="sc">%&gt;%</span> </span>
+<span id="cb5-10"><a href="#cb5-10"></a>  <span class="fu">select</span>(<span class="st">"NAMEUNIT"</span>, <span class="st">"geometry"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a>  <span class="fu">mutate</span>(<span class="at">Provincia =</span> <span class="fu">case_when</span>(NAMEUNIT <span class="sc">==</span> <span class="st">"Alacant/Alicante"</span> <span class="sc">~</span> <span class="st">"Alicante"</span>,</span>
+<span id="cb5-12"><a href="#cb5-12"></a>                               NAMEUNIT <span class="sc">==</span> <span class="st">"Araba/Álava"</span> <span class="sc">~</span> <span class="st">"Álava"</span>,</span>
+<span id="cb5-13"><a href="#cb5-13"></a>                               NAMEUNIT <span class="sc">==</span> <span class="st">"Castelló/Castellón"</span> <span class="sc">~</span> <span class="st">"Castellón"</span>,</span>
+<span id="cb5-14"><a href="#cb5-14"></a>                               NAMEUNIT <span class="sc">==</span> <span class="st">"València/Valencia"</span> <span class="sc">~</span> <span class="st">"Valencia"</span>,</span>
+<span id="cb5-15"><a href="#cb5-15"></a>                               NAMEUNIT <span class="sc">==</span> <span class="st">"Gipuzkoa"</span> <span class="sc">~</span> <span class="st">"Guipúzcoa"</span>,</span>
+<span id="cb5-16"><a href="#cb5-16"></a>                               NAMEUNIT <span class="sc">==</span> <span class="st">"Bizkaia"</span> <span class="sc">~</span> <span class="st">"Vizcaya"</span>,</span>
+<span id="cb5-17"><a href="#cb5-17"></a>                               NAMEUNIT <span class="sc">==</span> <span class="st">"Illes Balears"</span> <span class="sc">~</span> <span class="st">"Baleares"</span>,</span>
+<span id="cb5-18"><a href="#cb5-18"></a>                               NAMEUNIT <span class="sc">==</span> <span class="st">"Ourense"</span> <span class="sc">~</span> <span class="st">"Orense"</span>,</span>
+<span id="cb5-19"><a href="#cb5-19"></a>                               <span class="cn">TRUE</span> <span class="sc">~</span> NAMEUNIT)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-20"><a href="#cb5-20"></a>  <span class="fu">select</span>(<span class="st">"Provincia"</span>, <span class="st">"geometry"</span>)</span>
+<span id="cb5-21"><a href="#cb5-21"></a></span>
+<span id="cb5-22"><a href="#cb5-22"></a>españamun <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(españamun)</span>
+<span id="cb5-23"><a href="#cb5-23"></a></span>
+<span id="cb5-24"><a href="#cb5-24"></a></span>
+<span id="cb5-25"><a href="#cb5-25"></a>Provincias <span class="ot">&lt;-</span> <span class="fu">full_join</span>(Provincias, españamun, <span class="at">by =</span> <span class="st">"Provincia"</span> )</span>
+<span id="cb5-26"><a href="#cb5-26"></a></span>
+<span id="cb5-27"><a href="#cb5-27"></a>azul_fuerte <span class="ot">&lt;-</span> <span class="st">"#0c32f2"</span></span>
+<span id="cb5-28"><a href="#cb5-28"></a>azul_medio <span class="ot">&lt;-</span> <span class="st">"#6e86ff"</span></span>
+<span id="cb5-29"><a href="#cb5-29"></a>azul <span class="ot">&lt;-</span> <span class="st">"#c7f9ff"</span></span>
+<span id="cb5-30"><a href="#cb5-30"></a></span>
+<span id="cb5-31"><a href="#cb5-31"></a>paleta <span class="ot">&lt;-</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(azul, azul_medio , azul_fuerte))</span>
+<span id="cb5-32"><a href="#cb5-32"></a>colores_mapa <span class="ot">&lt;-</span> <span class="fu">paleta</span>(<span class="dv">10</span>)</span>
+<span id="cb5-33"><a href="#cb5-33"></a></span>
+<span id="cb5-34"><a href="#cb5-34"></a>theme_custom_map <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">base_size =</span> <span class="dv">11</span>,</span>
+<span id="cb5-35"><a href="#cb5-35"></a>                             <span class="at">base_family =</span> <span class="st">""</span>,</span>
+<span id="cb5-36"><a href="#cb5-36"></a>                             <span class="at">base_line_size =</span> base_size <span class="sc">/</span> <span class="dv">22</span>,</span>
+<span id="cb5-37"><a href="#cb5-37"></a>                             <span class="at">base_rect_size =</span> base_size <span class="sc">/</span> <span class="dv">22</span>) {</span>
+<span id="cb5-38"><a href="#cb5-38"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> base_size, </span>
+<span id="cb5-39"><a href="#cb5-39"></a>           <span class="at">base_family =</span> base_family,</span>
+<span id="cb5-40"><a href="#cb5-40"></a>           <span class="at">base_line_size =</span> base_line_size) <span class="sc">%+replace%</span></span>
+<span id="cb5-41"><a href="#cb5-41"></a>    <span class="fu">theme</span>(</span>
+<span id="cb5-42"><a href="#cb5-42"></a>      <span class="at">axis.title =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb5-43"><a href="#cb5-43"></a>      <span class="at">axis.text =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb5-44"><a href="#cb5-44"></a>      <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb5-45"><a href="#cb5-45"></a>      <span class="at">complete =</span> <span class="cn">TRUE</span></span>
+<span id="cb5-46"><a href="#cb5-46"></a>    )</span>
+<span id="cb5-47"><a href="#cb5-47"></a>}</span>
+<span id="cb5-48"><a href="#cb5-48"></a></span>
+<span id="cb5-49"><a href="#cb5-49"></a></span>
+<span id="cb5-50"><a href="#cb5-50"></a></span>
+<span id="cb5-51"><a href="#cb5-51"></a></span>
+<span id="cb5-52"><a href="#cb5-52"></a>MAPAESPAÑA <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> Provincias) <span class="sc">+</span> </span>
+<span id="cb5-53"><a href="#cb5-53"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill=</span> n, <span class="at">geometry =</span> geometry)) <span class="sc">+</span> </span>
+<span id="cb5-54"><a href="#cb5-54"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"COCHES ANUNCIADOS"</span>) <span class="sc">+</span> <span class="fu">scale_fill_gradientn</span>(<span class="at">colours =</span> colores_mapa) <span class="sc">+</span> </span>
+<span id="cb5-55"><a href="#cb5-55"></a>  <span class="fu">theme_custom_map</span>() <span class="sc">+</span> </span>
+<span id="cb5-56"><a href="#cb5-56"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb5-57"><a href="#cb5-57"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"MAPA DE COCHES DE SEGUNDA MANO ANUNCIADOS EN ESPAÑA"</span>)</span>
+<span id="cb5-58"><a href="#cb5-58"></a></span>
+<span id="cb5-59"><a href="#cb5-59"></a>MAPAESPAÑA</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="my_trabajo_BigData_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" style="width:95.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Los principales nucleos de venta de coches son, como era de esperar, las provincías mas pobladas, como son Madrid en primer lugar, Barcelona, Valencia, Sevilla y Málaga.</p>
+<p>Madrid es con diferencía la provincía con mas coches en venta. Algunas de las razones son las siguientes.</p>
+<ul>
+<li><p><strong>Tamaño de la población</strong>: Madrid es la capital y la ciudad más grande de España, por lo que es lógico que tenga una mayor demanda de coches de segunda mano debido a su gran población.</p></li>
+<li><p><strong>Mayor número de compradores potenciales</strong>: Debido a la gran población de Madrid, también es más probable que haya un mayor número de compradores potenciales en la ciudad, lo que aumenta la demanda de coches de segunda mano.</p></li>
+<li><p><strong>Mayor oferta de coches de segunda mano</strong>: Debido a la gran población y al elevado tráfico de coches en Madrid, es más probable que haya una mayor oferta de coches de segunda mano disponibles para la venta en la ciudad.</p></li>
+<li><p><strong>Mayor concentración de concesionarios y distribuidores</strong>: Es posible que haya una mayor concentración de concesionarios y distribuidores de coches de segunda mano en Madrid, lo que puede contribuir a la mayor cantidad de ventas en la ciudad.</p></li>
+<li><p><strong>Mayor actividad económica</strong>: Madrid es un importante centro económico en España, lo que puede contribuir a una mayor demanda de coches de segunda mano debido a la mayor cantidad de personas que pueden permitirse comprar un coche.</p></li>
+</ul></section><section id="precios-de-los-coches" class="level2"><h2 class="anchored" data-anchor-id="precios-de-los-coches">Precios de los coches</h2>
+<p>El siguiente grafico nos muestra la media del precio de los coches dsitrubidos por provincias.</p>
+<div class="cell" data-layout-align="center">
+<details><summary>Código</summary><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>Prov_pre <span class="ot">&lt;-</span> coches <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="st">"Provincia"</span>, <span class="st">"Precio"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">arrange</span>(Provincia)</span>
+<span id="cb6-3"><a href="#cb6-3"></a></span>
+<span id="cb6-4"><a href="#cb6-4"></a>Prov_pre <span class="ot">&lt;-</span> Prov_pre[<span class="dv">7</span><span class="sc">:</span><span class="dv">50000</span>,]</span>
+<span id="cb6-5"><a href="#cb6-5"></a></span>
+<span id="cb6-6"><a href="#cb6-6"></a>Precio_medio <span class="ot">&lt;-</span> Prov_pre <span class="sc">%&gt;%</span> </span>
+<span id="cb6-7"><a href="#cb6-7"></a>  <span class="fu">group_by</span>(Provincia) <span class="sc">%&gt;%</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>  <span class="fu">summarise</span>(<span class="at">Media =</span> <span class="fu">mean</span>(Precio)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb6-10"><a href="#cb6-10"></a></span>
+<span id="cb6-11"><a href="#cb6-11"></a>Grafico_Precio_medio <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(Precio_medio) <span class="sc">+</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a>  <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Provincia,Media), <span class="at">y =</span> Media, <span class="at">fill =</span> Provincia) <span class="sc">+</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a>  <span class="fu">scale_fill_hue</span>(<span class="at">direction =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_pander</span>() <span class="sc">+</span></span>
+<span id="cb6-17"><a href="#cb6-17"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)<span class="sc">+</span></span>
+<span id="cb6-18"><a href="#cb6-18"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Provincias"</span>, <span class="at">y =</span> <span class="st">"Precio Medio"</span>)</span>
+<span id="cb6-19"><a href="#cb6-19"></a></span>
+<span id="cb6-20"><a href="#cb6-20"></a>Grafico_Precio_medio</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="my_trabajo_BigData_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" style="width:95.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>La provincía con el precio medio mas alto sería Burgos, seguidas de ciudades como Barcelona, Girona, Madrid y Valencia entre las demás.</p>
+<p>Ciudades mas rurales como pueden ser Huelva, Ciudad Real, Caceres, Guadalajara se encuentran el posicinoes bajas del gráfico. Y las que menos precio medio presentan son las ciudades autonomas de Ceuta y Melilla.</p>
+</section><section id="comparación-de-los-kilometros-con-los-años-del-coche" class="level2"><h2 class="anchored" data-anchor-id="comparación-de-los-kilometros-con-los-años-del-coche">Comparación de los kilometros con los años del coche</h2>
+<p>Por último, vamos a comparar los kilometros que lleva el coche, con los años que tiene. Existe una particularidad que se puede observar en el siguiente gráfico.</p>
+<div class="cell" data-layout-align="center">
+<details><summary>Código</summary><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>KM_año <span class="ot">&lt;-</span> coches <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2"></a>  <span class="fu">select</span>(<span class="st">"Año"</span>, <span class="st">"Kilometros"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="fu">group_by</span>(Año) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>  <span class="fu">summarise</span>(<span class="at">Media =</span><span class="fu">mean</span>(Kilometros)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Año))<span class="sc">%&gt;%</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a>  <span class="fu">mutate</span>(<span class="at">Media =</span> <span class="fu">as.integer</span>(<span class="fu">round</span>(Media)))</span>
+<span id="cb7-7"><a href="#cb7-7"></a></span>
+<span id="cb7-8"><a href="#cb7-8"></a>Grafico_KM_año <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(KM_año) <span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a>  <span class="fu">aes</span>(<span class="at">x =</span> Año, <span class="at">y =</span> Media) <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">colour =</span> <span class="st">"#FF0000"</span>) <span class="sc">+</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a>  <span class="fu">labs</span>(</span>
+<span id="cb7-12"><a href="#cb7-12"></a>    <span class="at">x =</span> <span class="st">"Año"</span>,</span>
+<span id="cb7-13"><a href="#cb7-13"></a>    <span class="at">y =</span> <span class="st">"Kilometros"</span>,</span>
+<span id="cb7-14"><a href="#cb7-14"></a>    <span class="at">title =</span> <span class="st">"Comparación KM/Año de los coches de segunda mano en España"</span>,</span>
+<span id="cb7-15"><a href="#cb7-15"></a>    <span class="at">subtitle =</span> <span class="st">"Muestreo de 50000 coches "</span></span>
+<span id="cb7-16"><a href="#cb7-16"></a>  ) <span class="sc">+</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_calc</span>()  </span>
+<span id="cb7-18"><a href="#cb7-18"></a></span>
+<span id="cb7-19"><a href="#cb7-19"></a>Grafico_KM_año</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="my_trabajo_BigData_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" style="width:95.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Como se oberva, hasta los 2000 aproximadamente es raro como contra mas años poseé el vehículo. La verdad que no entiendo las razones excatas de que por que sucede esto. Puede ser que por que antiguamente, no había las estructuras de carreteras que hay hoy en dia, por lo que no se conducia tanto, o por que son coches tan antiguos que estan muy bien cuidados como forma de artículo coleccionable o algo por estilo.</p>
+</section><section id="conclusiones" class="level2"><h2 class="anchored" data-anchor-id="conclusiones">Conclusiones</h2>
+<p>El mercado de coches de segunda mano en España es bastante activo y tiene una gran demanda. Hay una gran variedad de coches de segunda mano disponibles para la venta, desde coches de lujo y deportivos hasta coches más económicos y familiares.</p>
+<p>Hay muchas formas de comprar coches de segunda mano en España, como a través de concesionarios de coches de segunda mano, distribuidores independientes, particulares o a través de plataformas en línea. También es común ver anuncios de coches de segunda mano en periódicos y revistas especializadas, así como en carteles y anuncios en la calle.</p>
+<p>En general, el mercado de coches de segunda mano en España es muy competitivo y es posible encontrar buenas ofertas y descuentos si se busca en el lugar adecuado. Sin embargo, es importante hacer una revisión adecuada del coche antes de comprarlo y asegurarse de que se está obteniendo un buen trato. También es recomendable comparar precios y hacer una investigación adecuada antes de tomar una decisión de compra.</p>
+</section><section id="información-sobre-la-sesión" class="level2"><h2 class="anchored" data-anchor-id="información-sobre-la-sesión">Información sobre la sesión</h2>
+<p>Abajo muestro mi entorno de trabajo y paquetes utilizados</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<details closed=""><summary><span title="Click to Expand"> current session info </span>
+</summary><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a></span>
+<span id="cb8-2"><a href="#cb8-2"></a>─ Session info ───────────────────────────────────────────────────────────────</span>
+<span id="cb8-3"><a href="#cb8-3"></a> setting  value</span>
+<span id="cb8-4"><a href="#cb8-4"></a> version  R version <span class="dv">4</span>.<span class="fl">2.1</span> (<span class="dv">2022-06-23</span> ucrt)</span>
+<span id="cb8-5"><a href="#cb8-5"></a> os       Windows <span class="dv">10</span> <span class="fu">x64</span> (build <span class="dv">19044</span>)</span>
+<span id="cb8-6"><a href="#cb8-6"></a> system   x86_64, mingw32</span>
+<span id="cb8-7"><a href="#cb8-7"></a> ui       RTerm</span>
+<span id="cb8-8"><a href="#cb8-8"></a> <span class="fu">language</span> (EN)</span>
+<span id="cb8-9"><a href="#cb8-9"></a> collate  Spanish_Spain.utf8</span>
+<span id="cb8-10"><a href="#cb8-10"></a> ctype    Spanish_Spain.utf8</span>
+<span id="cb8-11"><a href="#cb8-11"></a> tz       Europe<span class="sc">/</span>Paris</span>
+<span id="cb8-12"><a href="#cb8-12"></a> date     <span class="dv">2022-12-28</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a> pandoc   <span class="fl">2.18</span> <span class="sc">@</span> C<span class="sc">:</span><span class="er">/</span>Program Files<span class="sc">/</span>RStudio<span class="sc">/</span>bin<span class="sc">/</span>quarto<span class="sc">/</span>bin<span class="sc">/</span>tools<span class="sc">/</span> (via rmarkdown)</span>
+<span id="cb8-14"><a href="#cb8-14"></a></span>
+<span id="cb8-15"><a href="#cb8-15"></a>─ Packages ───────────────────────────────────────────────────────────────────</span>
+<span id="cb8-16"><a href="#cb8-16"></a> package       <span class="sc">*</span> version <span class="fu">date</span> (UTC) lib source</span>
+<span id="cb8-17"><a href="#cb8-17"></a> assertthat      <span class="dv">0</span>.<span class="fl">2.1</span>   <span class="dv">2019-03-21</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-18"><a href="#cb8-18"></a> backports       <span class="dv">1</span>.<span class="fl">4.1</span>   <span class="dv">2021-12-13</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.0</span>)</span>
+<span id="cb8-19"><a href="#cb8-19"></a> broom           <span class="dv">1</span>.<span class="fl">0.1</span>   <span class="dv">2022-08-29</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-20"><a href="#cb8-20"></a> cellranger      <span class="dv">1</span>.<span class="fl">1.0</span>   <span class="dv">2016-07-27</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-21"><a href="#cb8-21"></a> class           <span class="fl">7.3</span><span class="dv">-20</span>  <span class="dv">2022-01-16</span> [<span class="dv">2</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-22"><a href="#cb8-22"></a> classInt        <span class="fl">0.4</span><span class="dv">-7</span>   <span class="dv">2022-06-10</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-23"><a href="#cb8-23"></a> cli             <span class="dv">3</span>.<span class="fl">4.0</span>   <span class="dv">2022-09-08</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-24"><a href="#cb8-24"></a> clipr           <span class="dv">0</span>.<span class="fl">8.0</span>   <span class="dv">2022-02-22</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-25"><a href="#cb8-25"></a> colorspace      <span class="fl">2.0</span><span class="dv">-3</span>   <span class="dv">2022-02-21</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-26"><a href="#cb8-26"></a> crayon          <span class="dv">1</span>.<span class="fl">5.1</span>   <span class="dv">2022-03-26</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-27"><a href="#cb8-27"></a> curl            <span class="dv">4</span>.<span class="fl">3.2</span>   <span class="dv">2021-06-23</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-28"><a href="#cb8-28"></a> data.table      <span class="dv">1</span>.<span class="fl">14.2</span>  <span class="dv">2021-09-27</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-29"><a href="#cb8-29"></a> DBI             <span class="dv">1</span>.<span class="fl">1.3</span>   <span class="dv">2022-06-18</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-30"><a href="#cb8-30"></a> dbplyr          <span class="dv">2</span>.<span class="fl">2.1</span>   <span class="dv">2022-06-27</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-31"><a href="#cb8-31"></a> desc            <span class="dv">1</span>.<span class="fl">4.2</span>   <span class="dv">2022-09-08</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-32"><a href="#cb8-32"></a> details         <span class="dv">0</span>.<span class="fl">3.0</span>   <span class="dv">2022-03-27</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.2</span>)</span>
+<span id="cb8-33"><a href="#cb8-33"></a> digest          <span class="dv">0</span>.<span class="fl">6.29</span>  <span class="dv">2021-12-01</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-34"><a href="#cb8-34"></a> dplyr         <span class="sc">*</span> <span class="dv">1</span>.<span class="fl">0.10</span>  <span class="dv">2022-09-01</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-35"><a href="#cb8-35"></a> DT            <span class="sc">*</span> <span class="fl">0.25</span>    <span class="dv">2022-09-12</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-36"><a href="#cb8-36"></a> e1071           <span class="fl">1.7</span><span class="dv">-11</span>  <span class="dv">2022-06-07</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-37"><a href="#cb8-37"></a> ellipsis        <span class="dv">0</span>.<span class="fl">3.2</span>   <span class="dv">2021-04-29</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-38"><a href="#cb8-38"></a> evaluate        <span class="fl">0.16</span>    <span class="dv">2022-08-09</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-39"><a href="#cb8-39"></a> fansi           <span class="dv">1</span>.<span class="fl">0.3</span>   <span class="dv">2022-03-24</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-40"><a href="#cb8-40"></a> farver          <span class="dv">2</span>.<span class="fl">1.1</span>   <span class="dv">2022-07-06</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-41"><a href="#cb8-41"></a> fastmap         <span class="dv">1</span>.<span class="fl">1.0</span>   <span class="dv">2021-01-25</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-42"><a href="#cb8-42"></a> forcats       <span class="sc">*</span> <span class="dv">0</span>.<span class="fl">5.2</span>   <span class="dv">2022-08-19</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-43"><a href="#cb8-43"></a> foreign         <span class="fl">0.8</span><span class="dv">-82</span>  <span class="dv">2022-01-16</span> [<span class="dv">2</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-44"><a href="#cb8-44"></a> formatR         <span class="fl">1.12</span>    <span class="dv">2022-03-31</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-45"><a href="#cb8-45"></a> fs              <span class="dv">1</span>.<span class="fl">5.2</span>   <span class="dv">2021-12-08</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-46"><a href="#cb8-46"></a> gargle          <span class="dv">1</span>.<span class="fl">2.1</span>   <span class="dv">2022-09-08</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-47"><a href="#cb8-47"></a> generics        <span class="dv">0</span>.<span class="fl">1.3</span>   <span class="dv">2022-07-05</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-48"><a href="#cb8-48"></a> ggplot2       <span class="sc">*</span> <span class="dv">3</span>.<span class="fl">3.6</span>   <span class="dv">2022-05-03</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-49"><a href="#cb8-49"></a> ggThemeAssist <span class="sc">*</span> <span class="dv">0</span>.<span class="fl">1.5</span>   <span class="dv">2016-08-13</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-50"><a href="#cb8-50"></a> ggthemes      <span class="sc">*</span> <span class="dv">4</span>.<span class="fl">2.4</span>   <span class="dv">2021-01-20</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-51"><a href="#cb8-51"></a> gifski        <span class="sc">*</span> <span class="dv">1</span>.<span class="fl">6.6</span><span class="dv">-1</span> <span class="dv">2022-04-05</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-52"><a href="#cb8-52"></a> glue            <span class="dv">1</span>.<span class="fl">6.2</span>   <span class="dv">2022-02-24</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-53"><a href="#cb8-53"></a> googledrive     <span class="dv">2</span>.<span class="fl">0.0</span>   <span class="dv">2021-07-08</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-54"><a href="#cb8-54"></a> googlesheets4   <span class="dv">1</span>.<span class="fl">0.1</span>   <span class="dv">2022-08-13</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-55"><a href="#cb8-55"></a> gt            <span class="sc">*</span> <span class="dv">0</span>.<span class="fl">7.0</span>   <span class="dv">2022-08-25</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-56"><a href="#cb8-56"></a> gtable          <span class="dv">0</span>.<span class="fl">3.1</span>   <span class="dv">2022-09-01</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-57"><a href="#cb8-57"></a> haven           <span class="dv">2</span>.<span class="fl">5.1</span>   <span class="dv">2022-08-22</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-58"><a href="#cb8-58"></a> hms             <span class="dv">1</span>.<span class="fl">1.2</span>   <span class="dv">2022-08-19</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-59"><a href="#cb8-59"></a> htmltools       <span class="dv">0</span>.<span class="fl">5.3</span>   <span class="dv">2022-07-18</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-60"><a href="#cb8-60"></a> htmlwidgets     <span class="dv">1</span>.<span class="fl">5.4</span>   <span class="dv">2021-09-08</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-61"><a href="#cb8-61"></a> httpuv          <span class="dv">1</span>.<span class="fl">6.6</span>   <span class="dv">2022-09-08</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-62"><a href="#cb8-62"></a> httr            <span class="dv">1</span>.<span class="fl">4.4</span>   <span class="dv">2022-08-17</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-63"><a href="#cb8-63"></a> jsonlite        <span class="dv">1</span>.<span class="fl">8.0</span>   <span class="dv">2022-02-22</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-64"><a href="#cb8-64"></a> kableExtra    <span class="sc">*</span> <span class="dv">1</span>.<span class="fl">3.4</span>   <span class="dv">2021-02-20</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-65"><a href="#cb8-65"></a> KernSmooth      <span class="fl">2.23</span><span class="dv">-20</span> <span class="dv">2021-05-03</span> [<span class="dv">2</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-66"><a href="#cb8-66"></a> knitr         <span class="sc">*</span> <span class="fl">1.40</span>    <span class="dv">2022-08-24</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-67"><a href="#cb8-67"></a> labeling        <span class="dv">0</span>.<span class="fl">4.2</span>   <span class="dv">2020-10-20</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.0</span>)</span>
+<span id="cb8-68"><a href="#cb8-68"></a> later           <span class="dv">1</span>.<span class="fl">3.0</span>   <span class="dv">2021-08-18</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-69"><a href="#cb8-69"></a> lazyeval        <span class="dv">0</span>.<span class="fl">2.2</span>   <span class="dv">2019-03-15</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-70"><a href="#cb8-70"></a> lifecycle       <span class="dv">1</span>.<span class="fl">0.2</span>   <span class="dv">2022-09-09</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-71"><a href="#cb8-71"></a> lubridate       <span class="dv">1</span>.<span class="fl">8.0</span>   <span class="dv">2021-10-07</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-72"><a href="#cb8-72"></a> magrittr        <span class="dv">2</span>.<span class="fl">0.3</span>   <span class="dv">2022-03-30</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-73"><a href="#cb8-73"></a> maps          <span class="sc">*</span> <span class="dv">3</span>.<span class="fl">4.1</span>   <span class="dv">2022-10-30</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.2</span>)</span>
+<span id="cb8-74"><a href="#cb8-74"></a> mime            <span class="fl">0.12</span>    <span class="dv">2021-09-28</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.0</span>)</span>
+<span id="cb8-75"><a href="#cb8-75"></a> miniUI          <span class="dv">0</span>.<span class="dv">1</span>.<span class="fl">1.1</span> <span class="dv">2018-05-18</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-76"><a href="#cb8-76"></a> modelr          <span class="dv">0</span>.<span class="fl">1.9</span>   <span class="dv">2022-08-19</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-77"><a href="#cb8-77"></a> munsell         <span class="dv">0</span>.<span class="fl">5.0</span>   <span class="dv">2018-06-12</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-78"><a href="#cb8-78"></a> openxlsx        <span class="dv">4</span>.<span class="fl">2.5</span>   <span class="dv">2021-12-14</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-79"><a href="#cb8-79"></a> pander          <span class="dv">0</span>.<span class="fl">6.5</span>   <span class="dv">2022-03-18</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-80"><a href="#cb8-80"></a> patchwork     <span class="sc">*</span> <span class="dv">1</span>.<span class="fl">1.2</span>   <span class="dv">2022-08-19</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-81"><a href="#cb8-81"></a> pillar          <span class="dv">1</span>.<span class="fl">8.1</span>   <span class="dv">2022-08-19</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-82"><a href="#cb8-82"></a> pkgconfig       <span class="dv">2</span>.<span class="fl">0.3</span>   <span class="dv">2019-09-22</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-83"><a href="#cb8-83"></a> plotly        <span class="sc">*</span> <span class="dv">4</span>.<span class="fl">10.0</span>  <span class="dv">2021-10-09</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-84"><a href="#cb8-84"></a> png             <span class="fl">0.1</span><span class="dv">-7</span>   <span class="dv">2013-12-03</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.0</span>)</span>
+<span id="cb8-85"><a href="#cb8-85"></a> promises        <span class="dv">1</span>.<span class="dv">2</span>.<span class="fl">0.1</span> <span class="dv">2021-02-11</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-86"><a href="#cb8-86"></a> proxy           <span class="fl">0.4</span><span class="dv">-27</span>  <span class="dv">2022-06-09</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-87"><a href="#cb8-87"></a> purrr         <span class="sc">*</span> <span class="dv">0</span>.<span class="fl">3.4</span>   <span class="dv">2020-04-17</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-88"><a href="#cb8-88"></a> R6              <span class="dv">2</span>.<span class="fl">5.1</span>   <span class="dv">2021-08-19</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-89"><a href="#cb8-89"></a> Rcpp            <span class="dv">1</span>.<span class="fl">0.9</span>   <span class="dv">2022-07-08</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-90"><a href="#cb8-90"></a> readr         <span class="sc">*</span> <span class="dv">2</span>.<span class="fl">1.2</span>   <span class="dv">2022-01-30</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-91"><a href="#cb8-91"></a> readxl          <span class="dv">1</span>.<span class="fl">4.1</span>   <span class="dv">2022-08-17</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-92"><a href="#cb8-92"></a> reprex          <span class="dv">2</span>.<span class="fl">0.2</span>   <span class="dv">2022-08-17</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-93"><a href="#cb8-93"></a> rio             <span class="dv">0</span>.<span class="fl">5.29</span>  <span class="dv">2021-11-22</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-94"><a href="#cb8-94"></a> rlang           <span class="dv">1</span>.<span class="fl">0.6</span>   <span class="dv">2022-09-24</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.2</span>)</span>
+<span id="cb8-95"><a href="#cb8-95"></a> rmarkdown       <span class="fl">2.16</span>    <span class="dv">2022-08-24</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-96"><a href="#cb8-96"></a> rprojroot       <span class="dv">2</span>.<span class="fl">0.3</span>   <span class="dv">2022-04-02</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-97"><a href="#cb8-97"></a> rstudioapi      <span class="fl">0.14</span>    <span class="dv">2022-08-22</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-98"><a href="#cb8-98"></a> rvest           <span class="dv">1</span>.<span class="fl">0.3</span>   <span class="dv">2022-08-19</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-99"><a href="#cb8-99"></a> scales          <span class="dv">1</span>.<span class="fl">2.1</span>   <span class="dv">2022-08-20</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-100"><a href="#cb8-100"></a> sessioninfo     <span class="dv">1</span>.<span class="fl">2.2</span>   <span class="dv">2021-12-06</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-101"><a href="#cb8-101"></a> sf            <span class="sc">*</span> <span class="fl">1.0</span><span class="dv">-9</span>   <span class="dv">2022-11-08</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.2</span>)</span>
+<span id="cb8-102"><a href="#cb8-102"></a> shiny           <span class="dv">1</span>.<span class="fl">7.2</span>   <span class="dv">2022-07-19</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-103"><a href="#cb8-103"></a> stringi         <span class="dv">1</span>.<span class="fl">7.8</span>   <span class="dv">2022-07-11</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-104"><a href="#cb8-104"></a> stringr       <span class="sc">*</span> <span class="dv">1</span>.<span class="fl">4.1</span>   <span class="dv">2022-08-20</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-105"><a href="#cb8-105"></a> svglite         <span class="dv">2</span>.<span class="fl">1.0</span>   <span class="dv">2022-02-03</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-106"><a href="#cb8-106"></a> systemfonts     <span class="dv">1</span>.<span class="fl">0.4</span>   <span class="dv">2022-02-11</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-107"><a href="#cb8-107"></a> tibble        <span class="sc">*</span> <span class="dv">3</span>.<span class="fl">1.8</span>   <span class="dv">2022-07-22</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-108"><a href="#cb8-108"></a> tidyr         <span class="sc">*</span> <span class="dv">1</span>.<span class="fl">2.1</span>   <span class="dv">2022-09-08</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-109"><a href="#cb8-109"></a> tidyselect      <span class="dv">1</span>.<span class="fl">1.2</span>   <span class="dv">2022-02-21</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-110"><a href="#cb8-110"></a> tidyverse     <span class="sc">*</span> <span class="dv">1</span>.<span class="fl">3.2</span>   <span class="dv">2022-07-18</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-111"><a href="#cb8-111"></a> tzdb            <span class="dv">0</span>.<span class="fl">3.0</span>   <span class="dv">2022-03-28</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-112"><a href="#cb8-112"></a> units           <span class="fl">0.8</span><span class="dv">-0</span>   <span class="dv">2022-02-05</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-113"><a href="#cb8-113"></a> utf8            <span class="dv">1</span>.<span class="fl">2.2</span>   <span class="dv">2021-07-24</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-114"><a href="#cb8-114"></a> vctrs           <span class="dv">0</span>.<span class="fl">4.1</span>   <span class="dv">2022-04-13</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-115"><a href="#cb8-115"></a> viridisLite     <span class="dv">0</span>.<span class="fl">4.1</span>   <span class="dv">2022-08-22</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-116"><a href="#cb8-116"></a> webshot         <span class="dv">0</span>.<span class="fl">5.3</span>   <span class="dv">2022-04-14</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-117"><a href="#cb8-117"></a> withr           <span class="dv">2</span>.<span class="fl">5.0</span>   <span class="dv">2022-03-03</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-118"><a href="#cb8-118"></a> xfun            <span class="fl">0.33</span>    <span class="dv">2022-09-12</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-119"><a href="#cb8-119"></a> xml2            <span class="dv">1</span>.<span class="fl">3.3</span>   <span class="dv">2021-11-30</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-120"><a href="#cb8-120"></a> xtable          <span class="fl">1.8</span><span class="dv">-4</span>   <span class="dv">2019-04-21</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-121"><a href="#cb8-121"></a> yaml            <span class="dv">2</span>.<span class="fl">3.5</span>   <span class="dv">2022-02-21</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-122"><a href="#cb8-122"></a> zip             <span class="dv">2</span>.<span class="fl">2.1</span>   <span class="dv">2022-09-08</span> [<span class="dv">1</span>] <span class="fu">CRAN</span> (R <span class="dv">4</span>.<span class="fl">2.1</span>)</span>
+<span id="cb8-123"><a href="#cb8-123"></a></span>
+<span id="cb8-124"><a href="#cb8-124"></a> [<span class="dv">1</span>] C<span class="sc">:</span><span class="er">/</span>Users<span class="sc">/</span>ruben<span class="sc">/</span>AppData<span class="sc">/</span>Local<span class="sc">/</span>R<span class="sc">/</span>win<span class="sc">-</span>library<span class="sc">/</span><span class="fl">4.2</span></span>
+<span id="cb8-125"><a href="#cb8-125"></a> [<span class="dv">2</span>] C<span class="sc">:</span><span class="er">/</span>Program Files<span class="sc">/</span>R<span class="sc">/</span>R<span class="dv">-4</span>.<span class="fl">2.1</span><span class="sc">/</span>library</span>
+<span id="cb8-126"><a href="#cb8-126"></a></span>
+<span id="cb8-127"><a href="#cb8-127"></a>──────────────────────────────────────────────────────────────────────────────</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><p><br></p>
+</div>
+</div>
+
+
+<!-- -->
+
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+    var links = window.document.querySelectorAll('a:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+      }
+    }
+});
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Ejecutar el código</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb9" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1"></a><span class="co">---</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="an">title:</span><span class="co"> "El mercado de coches de segunda mano"</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="an">description:</span><span class="co"> |</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co">  Viendo como esta la situación del mercado en España y las CC.AA</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="an">author:</span><span class="co"> Rubén Rodríguez Giménez (rurogi@uv.es)  #--</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="an">date:</span><span class="co"> 2022-12-26                  #--</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="an">categories:</span><span class="co"> [trabajo BigData, Coches, Mercado de segunda mano]   #--</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="an">image:</span><span class="co"> "./imagenes/imagen_01.png"</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="an">title-block-banner:</span><span class="co"> "#A9957B" #- {true, false, "green","#AA0000"}</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="an">title-block-banner-color:</span><span class="co"> "white"    #-"#FFFFFF" </span></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="an">toc:</span><span class="co"> true</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a><span class="an">toc-location:</span><span class="co"> left</span></span>
+<span id="cb9-13"><a href="#cb9-13"></a><span class="an">toc-depth:</span><span class="co"> 3</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a><span class="an">smooth-scroll:</span><span class="co"> true</span></span>
+<span id="cb9-15"><a href="#cb9-15"></a><span class="an">format:</span><span class="co"> </span></span>
+<span id="cb9-16"><a href="#cb9-16"></a><span class="co">  html:</span></span>
+<span id="cb9-17"><a href="#cb9-17"></a><span class="co">    #backgroundcolor: "#fff6e6"</span></span>
+<span id="cb9-18"><a href="#cb9-18"></a><span class="co">    #standalone: true  </span></span>
+<span id="cb9-19"><a href="#cb9-19"></a><span class="co">    link-external-newwindow: true</span></span>
+<span id="cb9-20"><a href="#cb9-20"></a><span class="co">    #css: ./assets/my_css_file.css   #- CUIDADO!!!!</span></span>
+<span id="cb9-21"><a href="#cb9-21"></a><span class="an">code-tools:</span><span class="co"> true</span></span>
+<span id="cb9-22"><a href="#cb9-22"></a><span class="an">code-link:</span><span class="co"> true</span></span>
+<span id="cb9-23"><a href="#cb9-23"></a><span class="co">---</span></span>
+<span id="cb9-24"><a href="#cb9-24"></a></span>
+<span id="cb9-25"><a href="#cb9-25"></a><span class="fu">## Introducción</span></span>
+<span id="cb9-26"><a href="#cb9-26"></a></span>
+<span id="cb9-27"><a href="#cb9-27"></a>Hace un año, me compré mi primer coche de segunda mano. </span>
+<span id="cb9-28"><a href="#cb9-28"></a></span>
+<span id="cb9-29"><a href="#cb9-29"></a>Me costó mucho encontrar un coche decente dentro del mercado, todos tenian algún problema el cual no era informado o era saboteado como los kilometros para así que sea mas atractivo.</span>
+<span id="cb9-30"><a href="#cb9-30"></a></span>
+<span id="cb9-31"><a href="#cb9-31"></a>Después de cuatro meses buscando encontré lo que busacaba y a día de hoy estoy contento con mi compra.</span>
+<span id="cb9-32"><a href="#cb9-32"></a></span>
+<span id="cb9-33"><a href="#cb9-33"></a>Esta situacion me ha hecho reflexionar y me ha ayudado a decidirme por coger este DataSet y analizar el mercado, dentro de lo posible, de como está la situación en España y en las diferentes CC.AA. con una muestra de 50.000 coches de la página de ventas de segunda mano, Wallapop.</span>
+<span id="cb9-34"><a href="#cb9-34"></a></span>
+<span id="cb9-35"><a href="#cb9-35"></a><span class="fu">## Paquetes y datos usados</span></span>
+<span id="cb9-36"><a href="#cb9-36"></a></span>
+<span id="cb9-37"><a href="#cb9-37"></a>Para descargar y manipular los datos he optado por la siguiente lista de paquetes, la mayoría usados en las clases de este curso:</span>
+<span id="cb9-38"><a href="#cb9-38"></a></span>
+<span id="cb9-41"><a href="#cb9-41"></a><span class="in">```{r}</span></span>
+<span id="cb9-42"><a href="#cb9-42"></a><span class="fu">library</span>(tidyverse) <span class="co">#install.packages("tidyverse")</span></span>
+<span id="cb9-43"><a href="#cb9-43"></a><span class="fu">library</span>(sf) <span class="co">#install.packages("sf")</span></span>
+<span id="cb9-44"><a href="#cb9-44"></a><span class="fu">library</span>(DT) <span class="co">#install.packages("DT")</span></span>
+<span id="cb9-45"><a href="#cb9-45"></a><span class="fu">library</span>(ggThemeAssist) <span class="co">#install.packages("ggThemeAssist")</span></span>
+<span id="cb9-46"><a href="#cb9-46"></a><span class="fu">library</span>(patchwork) <span class="co">#install.packages("patchwork")</span></span>
+<span id="cb9-47"><a href="#cb9-47"></a><span class="fu">library</span>(plotly) <span class="co">#-install.packages("plotly")</span></span>
+<span id="cb9-48"><a href="#cb9-48"></a><span class="fu">library</span>(knitr) <span class="co">#install.packages("plotly")</span></span>
+<span id="cb9-49"><a href="#cb9-49"></a><span class="fu">library</span>(tibble) <span class="co">#install.packages("tibble")</span></span>
+<span id="cb9-50"><a href="#cb9-50"></a><span class="fu">library</span>(ggthemes) <span class="co">#install.packages("ggthemes)</span></span>
+<span id="cb9-51"><a href="#cb9-51"></a><span class="fu">library</span>(gifski) <span class="co">#install.packages("gifski")</span></span>
+<span id="cb9-52"><a href="#cb9-52"></a><span class="fu">library</span>(gt) <span class="co">#install.packages("gt")</span></span>
+<span id="cb9-53"><a href="#cb9-53"></a><span class="fu">library</span>(kableExtra) <span class="co">#install.packages("kableExtra")</span></span>
+<span id="cb9-54"><a href="#cb9-54"></a><span class="fu">library</span>(maps) <span class="co">#install.packages("maps")</span></span>
+<span id="cb9-55"><a href="#cb9-55"></a><span class="in">```</span></span>
+<span id="cb9-56"><a href="#cb9-56"></a></span>
+<span id="cb9-57"><a href="#cb9-57"></a>Para el tema de los datos, he usado unos datos de la página <span class="co">[</span><span class="ot">KAGGLE</span><span class="co">](https://www.kaggle.com/)</span> concretamente, este <span class="co">[</span><span class="ot">DATASET</span><span class="co">](https://www.kaggle.com/datasets/datamarket/venta-de-coches)</span></span>
+<span id="cb9-58"><a href="#cb9-58"></a></span>
+<span id="cb9-59"><a href="#cb9-59"></a>Dichos datos contienen informacion de 50.000 coches de la página de <span class="co">[</span><span class="ot">WALLAPOP</span><span class="co">](https://es.wallapop.com/)</span>. Entre ellos, el tipo de coche,la marca,  el precio, el modelo y los kilometros, entre otros.</span>
+<span id="cb9-60"><a href="#cb9-60"></a></span>
+<span id="cb9-61"><a href="#cb9-61"></a><span class="fu">## Marcas en venta</span></span>
+<span id="cb9-62"><a href="#cb9-62"></a></span>
+<span id="cb9-63"><a href="#cb9-63"></a>Existen muchas marcas de coches en venta, mas de las que me imagianaba. El siguiente grafico nos muestra la cantidad de coches que hay en venta de cada marca en España.</span>
+<span id="cb9-64"><a href="#cb9-64"></a></span>
+<span id="cb9-67"><a href="#cb9-67"></a><span class="in">```{r}</span></span>
+<span id="cb9-68"><a href="#cb9-68"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">999</span>)</span>
+<span id="cb9-69"><a href="#cb9-69"></a></span>
+<span id="cb9-70"><a href="#cb9-70"></a>coches <span class="ot">&lt;-</span> rio<span class="sc">::</span><span class="fu">import</span>(<span class="st">"./datos/coches.csv"</span>)</span>
+<span id="cb9-71"><a href="#cb9-71"></a></span>
+<span id="cb9-72"><a href="#cb9-72"></a>coches <span class="ot">&lt;-</span> coches <span class="sc">%&gt;%</span> </span>
+<span id="cb9-73"><a href="#cb9-73"></a>  <span class="fu">mutate</span>(<span class="at">Marca =</span> make) <span class="sc">%&gt;%</span></span>
+<span id="cb9-74"><a href="#cb9-74"></a>  <span class="fu">mutate</span>(<span class="at">Modelo =</span> model) <span class="sc">%&gt;%</span></span>
+<span id="cb9-75"><a href="#cb9-75"></a>  <span class="fu">mutate</span>(<span class="at">Precio =</span> price) <span class="sc">%&gt;%</span></span>
+<span id="cb9-76"><a href="#cb9-76"></a>  <span class="fu">mutate</span>(<span class="at">Combustible =</span> fuel) <span class="sc">%&gt;%</span></span>
+<span id="cb9-77"><a href="#cb9-77"></a>  <span class="fu">mutate</span>(Año <span class="ot">=</span> year) <span class="sc">%&gt;%</span></span>
+<span id="cb9-78"><a href="#cb9-78"></a>  <span class="fu">mutate</span>(<span class="at">Kilometros =</span> kms) <span class="sc">%&gt;%</span></span>
+<span id="cb9-79"><a href="#cb9-79"></a>  <span class="fu">mutate</span>(<span class="at">Profesional =</span> is_professional) <span class="sc">%&gt;%</span></span>
+<span id="cb9-80"><a href="#cb9-80"></a>  <span class="fu">mutate</span>(<span class="at">Provincia =</span> province) <span class="sc">%&gt;%</span></span>
+<span id="cb9-81"><a href="#cb9-81"></a>  <span class="fu">select</span>(<span class="st">"Marca"</span>, <span class="st">"Modelo"</span>, <span class="st">"Precio"</span>, <span class="st">"Combustible"</span>, <span class="st">"Año"</span>, <span class="st">"Kilometros"</span>, <span class="st">"Profesional"</span>, <span class="st">"Provincia"</span>) </span>
+<span id="cb9-82"><a href="#cb9-82"></a></span>
+<span id="cb9-83"><a href="#cb9-83"></a>coches<span class="sc">$</span>Profesional <span class="ot">&lt;-</span> <span class="fu">as.character</span>(coches<span class="sc">$</span>Profesional)</span>
+<span id="cb9-84"><a href="#cb9-84"></a></span>
+<span id="cb9-85"><a href="#cb9-85"></a></span>
+<span id="cb9-86"><a href="#cb9-86"></a>Marcas <span class="ot">&lt;-</span> coches <span class="sc">%&gt;%</span> </span>
+<span id="cb9-87"><a href="#cb9-87"></a>  <span class="fu">count</span>(Marca) <span class="sc">%&gt;%</span></span>
+<span id="cb9-88"><a href="#cb9-88"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span>
+<span id="cb9-89"><a href="#cb9-89"></a>  </span>
+<span id="cb9-90"><a href="#cb9-90"></a>masMarcas <span class="ot">&lt;-</span> Marcas <span class="sc">%&gt;%</span></span>
+<span id="cb9-91"><a href="#cb9-91"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">1500</span>)</span>
+<span id="cb9-92"><a href="#cb9-92"></a></span>
+<span id="cb9-93"><a href="#cb9-93"></a>menMarcas <span class="ot">&lt;-</span> Marcas <span class="sc">%&gt;%</span></span>
+<span id="cb9-94"><a href="#cb9-94"></a>  <span class="fu">filter</span>(n <span class="sc">&lt;</span> <span class="dv">1500</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-95"><a href="#cb9-95"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">5</span>)</span>
+<span id="cb9-96"><a href="#cb9-96"></a><span class="in">```</span></span>
+<span id="cb9-97"><a href="#cb9-97"></a></span>
+<span id="cb9-98"><a href="#cb9-98"></a>Las marcas mas anunciadas son las siguientes:</span>
+<span id="cb9-101"><a href="#cb9-101"></a><span class="in">```{r}</span></span>
+<span id="cb9-102"><a href="#cb9-102"></a>Grafico_masMarcas <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(masMarcas) <span class="sc">+</span></span>
+<span id="cb9-103"><a href="#cb9-103"></a>  <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Marca,n), <span class="at">y =</span> n, <span class="at">fill =</span> Marca) <span class="sc">+</span></span>
+<span id="cb9-104"><a href="#cb9-104"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb9-105"><a href="#cb9-105"></a>  <span class="fu">scale_fill_hue</span>(<span class="at">direction =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb9-106"><a href="#cb9-106"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_base</span>() <span class="sc">+</span></span>
+<span id="cb9-107"><a href="#cb9-107"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb9-108"><a href="#cb9-108"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Marca"</span>, <span class="at">y =</span> <span class="st">"Número de coches en venta"</span>)</span>
+<span id="cb9-109"><a href="#cb9-109"></a></span>
+<span id="cb9-110"><a href="#cb9-110"></a>Grafico_masMarcas</span>
+<span id="cb9-111"><a href="#cb9-111"></a><span class="in">```</span></span>
+<span id="cb9-112"><a href="#cb9-112"></a>Es curiosos como dentro de las 5 primeras marcas mas vendidas se encuentran coches como Mercedes, BMW o Audi, coches de gama alta y que no son muy accesibles a la clase de gente que busca cohces de segunda mano.</span>
+<span id="cb9-113"><a href="#cb9-113"></a></span>
+<span id="cb9-114"><a href="#cb9-114"></a></span>
+<span id="cb9-115"><a href="#cb9-115"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb9-116"><a href="#cb9-116"></a></span>
+<span id="cb9-117"><a href="#cb9-117"></a>Las marcas menos anunciadas son estas:</span>
+<span id="cb9-118"><a href="#cb9-118"></a><span class="in">```{r, fig.height=10}</span></span>
+<span id="cb9-119"><a href="#cb9-119"></a>Grafico_menMarcas <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(menMarcas) <span class="sc">+</span></span>
+<span id="cb9-120"><a href="#cb9-120"></a>  <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Marca,n), <span class="at">y =</span> n, <span class="at">fill =</span> Marca) <span class="sc">+</span></span>
+<span id="cb9-121"><a href="#cb9-121"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb9-122"><a href="#cb9-122"></a>  <span class="fu">scale_fill_hue</span>(<span class="at">direction =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb9-123"><a href="#cb9-123"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_base</span>() <span class="sc">+</span></span>
+<span id="cb9-124"><a href="#cb9-124"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb9-125"><a href="#cb9-125"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb9-126"><a href="#cb9-126"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Marca"</span>, <span class="at">y =</span> <span class="st">"Número de coches en venta"</span>)</span>
+<span id="cb9-127"><a href="#cb9-127"></a></span>
+<span id="cb9-128"><a href="#cb9-128"></a>Grafico_menMarcas</span>
+<span id="cb9-129"><a href="#cb9-129"></a><span class="in">```</span></span>
+<span id="cb9-130"><a href="#cb9-130"></a>Como se oberva hay marcas que no se venden practicamente nada, al tratarse de marcas exclusivas de otros paises y han tenido que ser importados.</span>
+<span id="cb9-131"><a href="#cb9-131"></a></span>
+<span id="cb9-132"><a href="#cb9-132"></a><span class="fu">## Cantidad de coches anunciados</span></span>
+<span id="cb9-133"><a href="#cb9-133"></a></span>
+<span id="cb9-134"><a href="#cb9-134"></a>A continuación, voy a representar en un mapa la cantidad de coches anunciados en las diferentes provincias.</span>
+<span id="cb9-135"><a href="#cb9-135"></a></span>
+<span id="cb9-138"><a href="#cb9-138"></a><span class="in">```{r}</span></span>
+<span id="cb9-139"><a href="#cb9-139"></a>Provincias <span class="ot">&lt;-</span> coches <span class="sc">%&gt;%</span> </span>
+<span id="cb9-140"><a href="#cb9-140"></a>  <span class="fu">count</span>(Provincia) <span class="sc">%&gt;%</span></span>
+<span id="cb9-141"><a href="#cb9-141"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span>
+<span id="cb9-142"><a href="#cb9-142"></a>  </span>
+<span id="cb9-143"><a href="#cb9-143"></a>Provincias <span class="ot">&lt;-</span> Provincias[<span class="dv">1</span><span class="sc">:</span><span class="dv">52</span>,]</span>
+<span id="cb9-144"><a href="#cb9-144"></a></span>
+<span id="cb9-145"><a href="#cb9-145"></a>españamun <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"./shapefiles"</span>, <span class="st">"mun"</span>)</span>
+<span id="cb9-146"><a href="#cb9-146"></a></span>
+<span id="cb9-147"><a href="#cb9-147"></a>españamun <span class="ot">&lt;-</span> españamun <span class="sc">%&gt;%</span> </span>
+<span id="cb9-148"><a href="#cb9-148"></a>  <span class="fu">select</span>(<span class="st">"NAMEUNIT"</span>, <span class="st">"geometry"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-149"><a href="#cb9-149"></a>  <span class="fu">mutate</span>(<span class="at">Provincia =</span> <span class="fu">case_when</span>(NAMEUNIT <span class="sc">==</span> <span class="st">"Alacant/Alicante"</span> <span class="sc">~</span> <span class="st">"Alicante"</span>,</span>
+<span id="cb9-150"><a href="#cb9-150"></a>                               NAMEUNIT <span class="sc">==</span> <span class="st">"Araba/Álava"</span> <span class="sc">~</span> <span class="st">"Álava"</span>,</span>
+<span id="cb9-151"><a href="#cb9-151"></a>                               NAMEUNIT <span class="sc">==</span> <span class="st">"Castelló/Castellón"</span> <span class="sc">~</span> <span class="st">"Castellón"</span>,</span>
+<span id="cb9-152"><a href="#cb9-152"></a>                               NAMEUNIT <span class="sc">==</span> <span class="st">"València/Valencia"</span> <span class="sc">~</span> <span class="st">"Valencia"</span>,</span>
+<span id="cb9-153"><a href="#cb9-153"></a>                               NAMEUNIT <span class="sc">==</span> <span class="st">"Gipuzkoa"</span> <span class="sc">~</span> <span class="st">"Guipúzcoa"</span>,</span>
+<span id="cb9-154"><a href="#cb9-154"></a>                               NAMEUNIT <span class="sc">==</span> <span class="st">"Bizkaia"</span> <span class="sc">~</span> <span class="st">"Vizcaya"</span>,</span>
+<span id="cb9-155"><a href="#cb9-155"></a>                               NAMEUNIT <span class="sc">==</span> <span class="st">"Illes Balears"</span> <span class="sc">~</span> <span class="st">"Baleares"</span>,</span>
+<span id="cb9-156"><a href="#cb9-156"></a>                               NAMEUNIT <span class="sc">==</span> <span class="st">"Ourense"</span> <span class="sc">~</span> <span class="st">"Orense"</span>,</span>
+<span id="cb9-157"><a href="#cb9-157"></a>                               <span class="cn">TRUE</span> <span class="sc">~</span> NAMEUNIT)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-158"><a href="#cb9-158"></a>  <span class="fu">select</span>(<span class="st">"Provincia"</span>, <span class="st">"geometry"</span>)</span>
+<span id="cb9-159"><a href="#cb9-159"></a></span>
+<span id="cb9-160"><a href="#cb9-160"></a>españamun <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(españamun)</span>
+<span id="cb9-161"><a href="#cb9-161"></a></span>
+<span id="cb9-162"><a href="#cb9-162"></a></span>
+<span id="cb9-163"><a href="#cb9-163"></a>Provincias <span class="ot">&lt;-</span> <span class="fu">full_join</span>(Provincias, españamun, <span class="at">by =</span> <span class="st">"Provincia"</span> )</span>
+<span id="cb9-164"><a href="#cb9-164"></a></span>
+<span id="cb9-165"><a href="#cb9-165"></a>azul_fuerte <span class="ot">&lt;-</span> <span class="st">"#0c32f2"</span></span>
+<span id="cb9-166"><a href="#cb9-166"></a>azul_medio <span class="ot">&lt;-</span> <span class="st">"#6e86ff"</span></span>
+<span id="cb9-167"><a href="#cb9-167"></a>azul <span class="ot">&lt;-</span> <span class="st">"#c7f9ff"</span></span>
+<span id="cb9-168"><a href="#cb9-168"></a></span>
+<span id="cb9-169"><a href="#cb9-169"></a>paleta <span class="ot">&lt;-</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(azul, azul_medio , azul_fuerte))</span>
+<span id="cb9-170"><a href="#cb9-170"></a>colores_mapa <span class="ot">&lt;-</span> <span class="fu">paleta</span>(<span class="dv">10</span>)</span>
+<span id="cb9-171"><a href="#cb9-171"></a></span>
+<span id="cb9-172"><a href="#cb9-172"></a>theme_custom_map <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">base_size =</span> <span class="dv">11</span>,</span>
+<span id="cb9-173"><a href="#cb9-173"></a>                             <span class="at">base_family =</span> <span class="st">""</span>,</span>
+<span id="cb9-174"><a href="#cb9-174"></a>                             <span class="at">base_line_size =</span> base_size <span class="sc">/</span> <span class="dv">22</span>,</span>
+<span id="cb9-175"><a href="#cb9-175"></a>                             <span class="at">base_rect_size =</span> base_size <span class="sc">/</span> <span class="dv">22</span>) {</span>
+<span id="cb9-176"><a href="#cb9-176"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> base_size, </span>
+<span id="cb9-177"><a href="#cb9-177"></a>           <span class="at">base_family =</span> base_family,</span>
+<span id="cb9-178"><a href="#cb9-178"></a>           <span class="at">base_line_size =</span> base_line_size) <span class="sc">%+replace%</span></span>
+<span id="cb9-179"><a href="#cb9-179"></a>    <span class="fu">theme</span>(</span>
+<span id="cb9-180"><a href="#cb9-180"></a>      <span class="at">axis.title =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb9-181"><a href="#cb9-181"></a>      <span class="at">axis.text =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb9-182"><a href="#cb9-182"></a>      <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb9-183"><a href="#cb9-183"></a>      <span class="at">complete =</span> <span class="cn">TRUE</span></span>
+<span id="cb9-184"><a href="#cb9-184"></a>    )</span>
+<span id="cb9-185"><a href="#cb9-185"></a>}</span>
+<span id="cb9-186"><a href="#cb9-186"></a></span>
+<span id="cb9-187"><a href="#cb9-187"></a></span>
+<span id="cb9-188"><a href="#cb9-188"></a></span>
+<span id="cb9-189"><a href="#cb9-189"></a></span>
+<span id="cb9-190"><a href="#cb9-190"></a>MAPAESPAÑA <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> Provincias) <span class="sc">+</span> </span>
+<span id="cb9-191"><a href="#cb9-191"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill=</span> n, <span class="at">geometry =</span> geometry)) <span class="sc">+</span> </span>
+<span id="cb9-192"><a href="#cb9-192"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"COCHES ANUNCIADOS"</span>) <span class="sc">+</span> <span class="fu">scale_fill_gradientn</span>(<span class="at">colours =</span> colores_mapa) <span class="sc">+</span> </span>
+<span id="cb9-193"><a href="#cb9-193"></a>  <span class="fu">theme_custom_map</span>() <span class="sc">+</span> </span>
+<span id="cb9-194"><a href="#cb9-194"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb9-195"><a href="#cb9-195"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"MAPA DE COCHES DE SEGUNDA MANO ANUNCIADOS EN ESPAÑA"</span>)</span>
+<span id="cb9-196"><a href="#cb9-196"></a></span>
+<span id="cb9-197"><a href="#cb9-197"></a>MAPAESPAÑA</span>
+<span id="cb9-198"><a href="#cb9-198"></a><span class="in">```</span></span>
+<span id="cb9-199"><a href="#cb9-199"></a></span>
+<span id="cb9-200"><a href="#cb9-200"></a>Los principales nucleos de venta de coches son, como era de esperar, las provincías mas pobladas, como son Madrid en primer lugar, Barcelona, Valencia, Sevilla y Málaga.</span>
+<span id="cb9-201"><a href="#cb9-201"></a></span>
+<span id="cb9-202"><a href="#cb9-202"></a>Madrid es con diferencía la provincía con mas coches en venta. Algunas de las razones son las siguientes.</span>
+<span id="cb9-203"><a href="#cb9-203"></a></span>
+<span id="cb9-204"><a href="#cb9-204"></a><span class="ss">- </span>**Tamaño de la población**: Madrid es la capital y la ciudad más grande de España, por lo que es lógico que tenga una mayor demanda de coches de segunda mano debido a su gran población.</span>
+<span id="cb9-205"><a href="#cb9-205"></a></span>
+<span id="cb9-206"><a href="#cb9-206"></a><span class="ss">- </span>**Mayor número de compradores potenciales**: Debido a la gran población de Madrid, también es más probable que haya un mayor número de compradores potenciales en la ciudad, lo que aumenta la demanda de coches de segunda mano.</span>
+<span id="cb9-207"><a href="#cb9-207"></a></span>
+<span id="cb9-208"><a href="#cb9-208"></a><span class="ss">- </span>**Mayor oferta de coches de segunda mano**: Debido a la gran población y al elevado tráfico de coches en Madrid, es más probable que haya una mayor oferta de coches de segunda mano disponibles para la venta en la ciudad.</span>
+<span id="cb9-209"><a href="#cb9-209"></a></span>
+<span id="cb9-210"><a href="#cb9-210"></a><span class="ss">- </span>**Mayor concentración de concesionarios y distribuidores**: Es posible que haya una mayor concentración de concesionarios y distribuidores de coches de segunda mano en Madrid, lo que puede contribuir a la mayor cantidad de ventas en la ciudad.</span>
+<span id="cb9-211"><a href="#cb9-211"></a></span>
+<span id="cb9-212"><a href="#cb9-212"></a><span class="ss">- </span>**Mayor actividad económica**: Madrid es un importante centro económico en España, lo que puede contribuir a una mayor demanda de coches de segunda mano debido a la mayor cantidad de personas que pueden permitirse comprar un coche.</span>
+<span id="cb9-213"><a href="#cb9-213"></a></span>
+<span id="cb9-214"><a href="#cb9-214"></a><span class="fu">## Precios de los coches</span></span>
+<span id="cb9-215"><a href="#cb9-215"></a></span>
+<span id="cb9-216"><a href="#cb9-216"></a>El siguiente grafico nos muestra la media del precio de los coches dsitrubidos por provincias.</span>
+<span id="cb9-217"><a href="#cb9-217"></a><span class="in">```{r,fig.height=8}</span></span>
+<span id="cb9-218"><a href="#cb9-218"></a>Prov_pre <span class="ot">&lt;-</span> coches <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="st">"Provincia"</span>, <span class="st">"Precio"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-219"><a href="#cb9-219"></a>  <span class="fu">arrange</span>(Provincia)</span>
+<span id="cb9-220"><a href="#cb9-220"></a></span>
+<span id="cb9-221"><a href="#cb9-221"></a>Prov_pre <span class="ot">&lt;-</span> Prov_pre[<span class="dv">7</span><span class="sc">:</span><span class="dv">50000</span>,]</span>
+<span id="cb9-222"><a href="#cb9-222"></a></span>
+<span id="cb9-223"><a href="#cb9-223"></a>Precio_medio <span class="ot">&lt;-</span> Prov_pre <span class="sc">%&gt;%</span> </span>
+<span id="cb9-224"><a href="#cb9-224"></a>  <span class="fu">group_by</span>(Provincia) <span class="sc">%&gt;%</span></span>
+<span id="cb9-225"><a href="#cb9-225"></a>  <span class="fu">summarise</span>(<span class="at">Media =</span> <span class="fu">mean</span>(Precio)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-226"><a href="#cb9-226"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb9-227"><a href="#cb9-227"></a></span>
+<span id="cb9-228"><a href="#cb9-228"></a>Grafico_Precio_medio <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(Precio_medio) <span class="sc">+</span></span>
+<span id="cb9-229"><a href="#cb9-229"></a>  <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Provincia,Media), <span class="at">y =</span> Media, <span class="at">fill =</span> Provincia) <span class="sc">+</span></span>
+<span id="cb9-230"><a href="#cb9-230"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb9-231"><a href="#cb9-231"></a>  <span class="fu">scale_fill_hue</span>(<span class="at">direction =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb9-232"><a href="#cb9-232"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb9-233"><a href="#cb9-233"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_pander</span>() <span class="sc">+</span></span>
+<span id="cb9-234"><a href="#cb9-234"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)<span class="sc">+</span></span>
+<span id="cb9-235"><a href="#cb9-235"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Provincias"</span>, <span class="at">y =</span> <span class="st">"Precio Medio"</span>)</span>
+<span id="cb9-236"><a href="#cb9-236"></a></span>
+<span id="cb9-237"><a href="#cb9-237"></a>Grafico_Precio_medio</span>
+<span id="cb9-238"><a href="#cb9-238"></a><span class="in">```</span></span>
+<span id="cb9-239"><a href="#cb9-239"></a></span>
+<span id="cb9-240"><a href="#cb9-240"></a>La provincía con el precio medio mas alto sería Burgos, seguidas de ciudades como Barcelona, Girona, Madrid y Valencia entre las demás.</span>
+<span id="cb9-241"><a href="#cb9-241"></a></span>
+<span id="cb9-242"><a href="#cb9-242"></a>Ciudades mas rurales como pueden ser Huelva, Ciudad Real, Caceres, Guadalajara se encuentran el posicinoes bajas del gráfico. Y las que menos precio medio presentan son las ciudades autonomas de Ceuta y Melilla.</span>
+<span id="cb9-243"><a href="#cb9-243"></a></span>
+<span id="cb9-244"><a href="#cb9-244"></a><span class="fu">## Comparación de los kilometros con los años del coche </span></span>
+<span id="cb9-245"><a href="#cb9-245"></a></span>
+<span id="cb9-246"><a href="#cb9-246"></a>Por último, vamos a comparar los kilometros que lleva el coche, con los años que tiene. Existe una particularidad que se puede observar en el siguiente gráfico.</span>
+<span id="cb9-247"><a href="#cb9-247"></a></span>
+<span id="cb9-250"><a href="#cb9-250"></a><span class="in">```{r}</span></span>
+<span id="cb9-251"><a href="#cb9-251"></a>KM_año <span class="ot">&lt;-</span> coches <span class="sc">%&gt;%</span> </span>
+<span id="cb9-252"><a href="#cb9-252"></a>  <span class="fu">select</span>(<span class="st">"Año"</span>, <span class="st">"Kilometros"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-253"><a href="#cb9-253"></a>  <span class="fu">group_by</span>(Año) <span class="sc">%&gt;%</span></span>
+<span id="cb9-254"><a href="#cb9-254"></a>  <span class="fu">summarise</span>(<span class="at">Media =</span><span class="fu">mean</span>(Kilometros)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-255"><a href="#cb9-255"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Año))<span class="sc">%&gt;%</span></span>
+<span id="cb9-256"><a href="#cb9-256"></a>  <span class="fu">mutate</span>(<span class="at">Media =</span> <span class="fu">as.integer</span>(<span class="fu">round</span>(Media)))</span>
+<span id="cb9-257"><a href="#cb9-257"></a></span>
+<span id="cb9-258"><a href="#cb9-258"></a>Grafico_KM_año <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(KM_año) <span class="sc">+</span></span>
+<span id="cb9-259"><a href="#cb9-259"></a>  <span class="fu">aes</span>(<span class="at">x =</span> Año, <span class="at">y =</span> Media) <span class="sc">+</span></span>
+<span id="cb9-260"><a href="#cb9-260"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">colour =</span> <span class="st">"#FF0000"</span>) <span class="sc">+</span></span>
+<span id="cb9-261"><a href="#cb9-261"></a>  <span class="fu">labs</span>(</span>
+<span id="cb9-262"><a href="#cb9-262"></a>    <span class="at">x =</span> <span class="st">"Año"</span>,</span>
+<span id="cb9-263"><a href="#cb9-263"></a>    <span class="at">y =</span> <span class="st">"Kilometros"</span>,</span>
+<span id="cb9-264"><a href="#cb9-264"></a>    <span class="at">title =</span> <span class="st">"Comparación KM/Año de los coches de segunda mano en España"</span>,</span>
+<span id="cb9-265"><a href="#cb9-265"></a>    <span class="at">subtitle =</span> <span class="st">"Muestreo de 50000 coches "</span></span>
+<span id="cb9-266"><a href="#cb9-266"></a>  ) <span class="sc">+</span></span>
+<span id="cb9-267"><a href="#cb9-267"></a>  ggthemes<span class="sc">::</span><span class="fu">theme_calc</span>()  </span>
+<span id="cb9-268"><a href="#cb9-268"></a></span>
+<span id="cb9-269"><a href="#cb9-269"></a>Grafico_KM_año</span>
+<span id="cb9-270"><a href="#cb9-270"></a><span class="in">```</span></span>
+<span id="cb9-271"><a href="#cb9-271"></a></span>
+<span id="cb9-272"><a href="#cb9-272"></a>Como se oberva, hasta los 2000 aproximadamente es raro como contra mas años poseé el vehículo. La verdad que no entiendo las razones excatas de que por que sucede esto. Puede ser que por que antiguamente, no había las estructuras de carreteras que hay hoy en dia, por lo que no se conducia tanto, o por que son coches tan antiguos que estan muy bien cuidados como forma de artículo coleccionable o algo por estilo.</span>
+<span id="cb9-273"><a href="#cb9-273"></a></span>
+<span id="cb9-274"><a href="#cb9-274"></a><span class="fu">## Conclusiones</span></span>
+<span id="cb9-275"><a href="#cb9-275"></a></span>
+<span id="cb9-276"><a href="#cb9-276"></a>El mercado de coches de segunda mano en España es bastante activo y tiene una gran demanda. Hay una gran variedad de coches de segunda mano disponibles para la venta, desde coches de lujo y deportivos hasta coches más económicos y familiares.</span>
+<span id="cb9-277"><a href="#cb9-277"></a></span>
+<span id="cb9-278"><a href="#cb9-278"></a>Hay muchas formas de comprar coches de segunda mano en España, como a través de concesionarios de coches de segunda mano, distribuidores independientes, particulares o a través de plataformas en línea. También es común ver anuncios de coches de segunda mano en periódicos y revistas especializadas, así como en carteles y anuncios en la calle.</span>
+<span id="cb9-279"><a href="#cb9-279"></a></span>
+<span id="cb9-280"><a href="#cb9-280"></a>En general, el mercado de coches de segunda mano en España es muy competitivo y es posible encontrar buenas ofertas y descuentos si se busca en el lugar adecuado. Sin embargo, es importante hacer una revisión adecuada del coche antes de comprarlo y asegurarse de que se está obteniendo un buen trato. También es recomendable comparar precios y hacer una investigación adecuada antes de tomar una decisión de compra.</span>
+<span id="cb9-281"><a href="#cb9-281"></a></span>
+<span id="cb9-282"><a href="#cb9-282"></a><span class="fu">## Información sobre la sesión</span></span>
+<span id="cb9-283"><a href="#cb9-283"></a></span>
+<span id="cb9-284"><a href="#cb9-284"></a>Abajo muestro mi entorno de trabajo y paquetes utilizados</span>
+<span id="cb9-285"><a href="#cb9-285"></a></span>
+<span id="cb9-288"><a href="#cb9-288"></a><span class="in">```{r}</span></span>
+<span id="cb9-289"><a href="#cb9-289"></a><span class="co">#| echo: false</span></span>
+<span id="cb9-290"><a href="#cb9-290"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb9-291"><a href="#cb9-291"></a>  details<span class="sc">::</span><span class="fu">details</span>(<span class="at">summary =</span> <span class="st">'current session info'</span>) </span>
+<span id="cb9-292"><a href="#cb9-292"></a><span class="in">```</span></span>
+</code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">© 2022 Pedro Navaja</div>   
+      <div class="nav-footer-center">Hecho con <a href="https://quarto.org">Quarto</a></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/roodrigueezzz">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/rubenrogi22">
+      <i class="bi bi-twitter" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="mailto:rurogi@alumni.uv.es">
+      <i class="bi bi-envelope" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+</div>
+  </div>
+</footer>
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

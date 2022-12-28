@@ -1,0 +1,31 @@
+---
+title: Rubén Rodríguez Giménez    
+image: my_foto.jfif      
+about:
+  template: trestles    #- {jolla, solana, ...}
+  image-width: 16em     #- https://cybmeta.com/em-y-rem
+  image-shape: rectangle    #- {rectangle, round, rounded}
+  links:
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com/rubenrogi22  #- vuestro twitter
+    - icon: instagram
+      text: Instagram
+      href: https://instagram.com/roodrigueezzz #- instagram
+    - icon: github
+      text: Github
+      href: https://github.com/roodrigueezzz         #- Github
+---
+        
+Hola, soy Rubén Rodríguez Giménez
+      
+Esta web sirve para presentar mi trabajo individual para la asignatura "Programación y manejo de datos en la era Del Big Data", optativa de GECO en la Facultad de Economía de la Universitat de València.
+
+La web de la asignatura está [aquí](https://perezp44.github.io/intro-ds-22-23-web/){target="_blank"} y los trabajos de mis compañeros de curso puedes verlos [aquí](https://perezp44.github.io/intro-ds-22-23-web/07-trabajos_2022-23.html){target="_blank"}.
+
+
+
+El trabajo lleva por título : "El mercado de coches de segunda mano en España". El objetivo es estudiar algunas caracteristicas del mercado de coches de segunda mano con el fin de ver si mi compra este año de mi coche ha sido buena
+
+
+El trabajo puede verse [aquí](my_trabajo_BigData.html).
